@@ -11,13 +11,13 @@ import UIKit
 class FeedViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
 
-    @IBOutlet weak var topViewTapButton: UIButton!
     @IBOutlet weak var rescheduleImageView: UIImageView!
     @IBOutlet weak var listImageView: UIImageView!
     @IBOutlet weak var feedImageView: UIImageView!
     
     @IBOutlet weak var backgroundContainerView: UIView!
     
+    @IBOutlet weak var mainContainerView: UIView!
     @IBOutlet weak var messageImageView: UIImageView!
     @IBOutlet weak var leftIcon: UIImageView!
     @IBOutlet weak var rightIcon: UIImageView!
@@ -28,7 +28,12 @@ class FeedViewController: UIViewController {
     var deleteThreshold = CGFloat(260)
     var laterThreshold = CGFloat(-60)
     var toDoThreshold = CGFloat(-260)
+    var messageHideFromMenuFrame = CGFloat(290)
     var state: Int!
+    
+
+    @IBOutlet var onMenuPan: UIPanGestureRecognizer!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,14 +41,17 @@ class FeedViewController: UIViewController {
         
         listImageView.alpha = 0
         rescheduleImageView.alpha = 0
-        topViewTapButton.enabled = false
-        
-//        scrollView.contentInset.bottom = 50
         
         leftIconOriginX = leftIcon.frame.origin.x
         rightIconOriginX = rightIcon.frame.origin.x
         
         // Do any additional setup after loading the view.
+        
+        var edgeGesture = UIScreenEdgePanGestureRecognizer(target: self, action: "onEdgePan:")
+        edgeGesture.edges = UIRectEdge.Left
+        mainContainerView.addGestureRecognizer(edgeGesture)
+        onMenuPan.enabled = false
+        
         
     }
 
@@ -268,13 +276,42 @@ class FeedViewController: UIViewController {
 
     }
     
+    func onEdgePan(edgeGestureRecognizer: UIScreenEdgePanGestureRecognizer) {
+        var translation = edgeGestureRecognizer.translationInView(view)
+        var velocity = edgeGestureRecognizer.velocityInView(view)
+        
+        if (edgeGestureRecognizer.state == UIGestureRecognizerState.Began) {
+
+            
+        } else if (edgeGestureRecognizer.state == UIGestureRecognizerState.Changed) {
+            mainContainerView.frame.origin.x = translation.x
+
+        
+        } else if (edgeGestureRecognizer.state == UIGestureRecognizerState.Ended) {
+            
+            if (velocity.x > 0) {
+                UIView.animateWithDuration(0.2, animations: {
+                    self.mainContainerView.frame.origin.x = self.messageHideFromMenuFrame
+                    self.onMenuPan.enabled = true
+
+                })
+            }
+                else if (velocity.x < 0) {
+                    UIView.animateWithDuration(0.2, animations: {
+                        self.mainContainerView.frame.origin.x = 0
+                        self.onMenuPan.enabled = false
+                    })
+            }
+        }
+    }
+    
+    
     @IBAction func onScreenTap(sender: AnyObject) {
         if (rescheduleImageView.alpha == 1) {
             UIView.animateWithDuration(0.2, animations: {
                 () -> Void in
                 self.rescheduleImageView.alpha = 0
             })
-            topViewTapButton.enabled = false
             dismissMessage()
             
         } else if (listImageView.alpha == 1) {
@@ -282,12 +319,47 @@ class FeedViewController: UIViewController {
                 () -> Void in
                 self.feedImageView.alpha = 0
             })
-            topViewTapButton.enabled = false
             dismissMessage()
         }
 
     }
     
+    @IBAction func onMainViewPan(sender: UIPanGestureRecognizer) {
+        
+        var translation = sender.translationInView(view)
+        var velocity = sender.velocityInView(view)
+        
+     
+        println("container frame: \(mainContainerView.frame.origin.x)")
+        println("translation x: \(translation.x)")
+        
+        
+        if (sender.state == UIGestureRecognizerState.Began) {
+            
+            
+        } else if (sender.state == UIGestureRecognizerState.Changed) {
+            mainContainerView.frame.origin.x = messageHideFromMenuFrame + translation.x
+            
+            
+        } else if (sender.state == UIGestureRecognizerState.Ended) {
+            
+            if (velocity.x > 0) {
+                UIView.animateWithDuration(0.2, animations: {
+                    self.mainContainerView.frame.origin.x = self.messageHideFromMenuFrame
+                    self.onMenuPan.enabled = true
+                    
+                })
+            }
+            else if (velocity.x < 0) {
+                UIView.animateWithDuration(0.2, animations: {
+                    self.mainContainerView.frame.origin.x = 0
+                    self.onMenuPan.enabled = false
+                })
+            }
+        }
+
+        
+    }
     
     /*
     // MARK: - Navigation
