@@ -52,6 +52,15 @@ class FeedViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func rescheduleOnTap(sender: UITapGestureRecognizer) {
+     
+        rescheduleImageView.alpha = 0
+        dismissMessage()
+    }
+    @IBAction func onListTap(sender: UITapGestureRecognizer) {
+        listImageView.alpha = 0
+        dismissMessage()
+    }
 
     @IBAction func onMessagePan(panGestureRecognizer: UIPanGestureRecognizer) {
         
@@ -83,15 +92,6 @@ class FeedViewController: UIViewController {
             println("right icon origin: \(rightIcon.frame.origin.x)")
             println("right icon original origin: \(rightIconOriginX)")
 
-            //
-//            if (messageImageView.frame.origin.x > archiveThreshold) {
-//                backgroundContainerView.backgroundColor = UIColor(red: 227/255, green: 227/255, blue: 227/255, alpha: 1)
-//                
-//            } else if (messageImageView.frame.origin.x > 50) {
-//                backgroundContainerView.backgroundColor = UIColor.blueColor()
-//                leftIcon.frame.origin.x = leftIconOriginX + translation.x
-//            }
-//            
             
             if (messageImageView.frame.origin.x > 0 && messageImageView.frame.origin.x < archiveThreshold) {
                 //didn't meet archive threshold
@@ -173,25 +173,6 @@ class FeedViewController: UIViewController {
                 
                 println("message archived")
                 dismissMessageRight()
-//                UIView.animateWithDuration(0.4, delay: 0, options: nil, animations: {
-//                    () -> Void in
-//                    self.messageImageView.frame.origin.x = 350
-//                    self.leftIcon.frame.origin.x = 350
-//                    }, completion: {
-//                        (value: Bool) in
-////                        self.backgroundContainerView.alpha = 0
-//                        self.dismissMessage()
-//                })
-//                
-                
-
-
-//                UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 2, options: nil, animations: {
-//                    () -> Void in
-//                    self.messageImageView.frame.origin.x = 400
-//                    }, completion: nil)
-                
-                //bring the view back
 
                
             } else if (state == 2) {
@@ -212,18 +193,32 @@ class FeedViewController: UIViewController {
                 //later message
                 println("message later")
                 
-                dismissMessageLeft()
-//                rescheduleImageView.alpha = 1
-//                topViewTapButton.enabled = true
-//                
+                UIView.animateWithDuration(0.4, delay: 0, options: nil, animations: {
+                    () -> Void in
+                    self.messageImageView.frame.origin.x = -350
+                    self.rightIcon.frame.origin.x = -350
+                    }, completion: {
+                        (value: Bool) in
+                        UIView.animateWithDuration(0.1, animations: {
+                            self.rescheduleImageView.alpha = 1
+                        })
 
+                })
                 
                 
             } else if (state == 5) {
                 //to do message
-                dismissMessageLeft()
-//                listImageView.alpha = 1
-//                topViewTapButton.enabled = true
+                UIView.animateWithDuration(0.4, delay: 0, options: nil, animations: {
+                    () -> Void in
+                    self.messageImageView.frame.origin.x = -350
+                    self.rightIcon.frame.origin.x = -350
+                    }, completion: {
+                        (value: Bool) in
+                        UIView.animateWithDuration(0.1, animations: {
+                            self.listImageView.alpha = 1
+                        })
+                        
+                })
 
             
                 println("message to do")
@@ -234,14 +229,6 @@ class FeedViewController: UIViewController {
     }
     
     func dismissMessageRight () {
-//        UIView.animateWithDuration(0.3, delay: 0, options: nil, animations: {
-//            () -> Void in
-//                self.messageImageView.frame.origin.x = 350
-//                self.leftIcon.frame.origin.x = 350
-//            }, completion: {
-//                (value: Bool) in
-//                self.dismissMessage()
-//        })
         
         UIView.animateWithDuration(0.4, delay: 0, options: nil, animations: {
             () -> Void in
@@ -249,16 +236,9 @@ class FeedViewController: UIViewController {
             self.leftIcon.frame.origin.x = 350
             }, completion: {
                 (value: Bool) in
-                //                        self.backgroundContainerView.alpha = 0
                 self.dismissMessage()
         })
 
-//
-//
-//        UIView.animateWithDuration(0.3, delay: 0.5, options: nil, animations: {
-//            () -> Void in
-//            self.messageImageView.frame.origin.x = 0
-//            }, completion: nil)
         
 
     }
@@ -271,56 +251,20 @@ class FeedViewController: UIViewController {
             self.rightIcon.frame.origin.x = -350
             }, completion: {
                 (value: Bool) in
-                //                        self.backgroundContainerView.alpha = 0
                 self.dismissMessage()
         })
-//        UIView.animateWithDuration(0.3, delay: 0, options: nil, animations: {
-//            () -> Void in
-//            self.messageImageView.frame.origin.x = -350
-//            self.rightIcon.frame.origin.x = -350
-//            }, completion: {
-//                (value:Bool) -> Void in
-//                self.rescheduleImageView.alpha = 1
-//        })
-//        
-//        UIView.animateWithDuration(0.5, delay: 0.5, options: nil, animations: {
-//            () -> Void in
-//            self.messageImageView.frame.origin.x = 0
-//            }, completion: nil)
     }
     
     func dismissMessage() {
-//        messageImageView.alpha = 0
         UIView.animateWithDuration(0.4, animations: {
             self.feedImageView.frame.origin.y -= 86
             }, completion: {
                 (value: Bool) in
                 self.feedImageView.frame.origin.y += 86
-                //bring the view back
+                //bring the view back, have to complete it after animation is done
                 self.messageImageView.frame.origin.x = 0
-//                self.backgroundContainerView.alpha = 1
-//                
-//                UIView.animateWithDuration(0.2, animations: {
-//                    self.feedImageView.frame.origin.y += 86
-//                    }, completion: {
-//                        (value: Bool) in
-//                        //bring the view back
-//                        self.messageImageView.frame.origin.x = 0
-//                        self.backgroundContainerView.alpha = 1
-//
-//                })
+
         })
-//        
-//        UIView.animateWithDuration(0.2, animations: {
-//            () -> Void in
-//            self.feedImageView.frame.origin.y -= 86
-//        })
-//        
-//        UIView.animateWithDuration(0.2, delay: 0.5, options: nil, animations: {
-//            () -> Void in
-//            self.feedImageView.frame.origin.y += 86
-//            self.messageImageView.alpha = 1
-//        }, completion: nil)
 
     }
     
