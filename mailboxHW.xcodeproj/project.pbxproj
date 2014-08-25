@@ -12,6 +12,7 @@
 		88DED4B519A31D6C00EFA9A6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88DED4B319A31D6C00EFA9A6 /* Main.storyboard */; };
 		88DED4B719A31D6C00EFA9A6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88DED4B619A31D6C00EFA9A6 /* Images.xcassets */; };
 		88DED4C319A31D6C00EFA9A6 /* mailboxHWTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DED4C219A31D6C00EFA9A6 /* mailboxHWTests.swift */; };
+		88DED4CD19A327A800EFA9A6 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DED4CC19A327A800EFA9A6 /* FeedViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +35,7 @@
 		88DED4BC19A31D6C00EFA9A6 /* mailboxHWTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mailboxHWTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		88DED4C119A31D6C00EFA9A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		88DED4C219A31D6C00EFA9A6 /* mailboxHWTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mailboxHWTests.swift; sourceTree = "<group>"; };
+		88DED4CC19A327A800EFA9A6 /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +80,7 @@
 				88DED4AF19A31D6C00EFA9A6 /* AppDelegate.swift */,
 				88DED4B119A31D6C00EFA9A6 /* ViewController.swift */,
 				88DED4B319A31D6C00EFA9A6 /* Main.storyboard */,
+				88DED4CC19A327A800EFA9A6 /* FeedViewController.swift */,
 				88DED4B619A31D6C00EFA9A6 /* Images.xcassets */,
 				88DED4AD19A31D6C00EFA9A6 /* Supporting Files */,
 			);
@@ -209,6 +212,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				88DED4B219A31D6C00EFA9A6 /* ViewController.swift in Sources */,
+				88DED4CD19A327A800EFA9A6 /* FeedViewController.swift in Sources */,
 				88DED4B019A31D6C00EFA9A6 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
